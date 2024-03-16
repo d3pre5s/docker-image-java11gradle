@@ -1,29 +1,6 @@
 FROM openjdk:11-jdk
 
 ENV GRADLE_HOME /opt/gradle
-
-RUN set -o errexit -o nounset \
-    && echo "Adding gradle user and group" \
-    && groupadd --system --gid 1000 gradle \
-    && useradd --system --gid gradle --uid 1000 --shell /bin/bash --create-home gradle \
-    && mkdir /home/gradle/.gradle \
-    && chown --recursive gradle:gradle /home/gradle \
-    \
-    && echo "Symlinking root Gradle cache to gradle Gradle cache" \
-    && ln -s /home/gradle/.gradle /root/.gradle \
-    && apt-get update \
-    && apt-get install --yes --no-install-recommends \
-        fontconfig \
-        unzip \
-        wget \
-        bzr \
-        git \
-        git-lfs \
-        mercurial \
-        openssh-client \
-        subversion \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /home/gradle
 
 ENV GRADLE_VERSION 6.5.2
